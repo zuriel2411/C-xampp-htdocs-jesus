@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Almacén de Abarrotes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .form {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input, button {
+            padding: 8px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .products {
+            border-top: 1px solid #ccc;
+            padding-top: 20px;
+        }
+
+        h2 {
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Almacén de Abarrotes</h1>
+        <div class="form">
+            <h2>Agregar Producto</h2>
+            <label for="product-name">Nombre del Producto:</label>
+            <input type="text" id="product-name">
+            <label for="quantity">Cantidad:</label>
+            <input type="number" id="quantity" min="1">
+            <button id="add-product-btn">Agregar Producto</button>
+        </div>
+        <div class="products">
+            <h2>Productos en Existencia</h2>
+            <ul id="product-list">
+                <!-- Aquí se mostrarán los productos -->
+            </ul>
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var addProductBtn = document.getElementById("add-product-btn");
+            var productList = document.getElementById("product-list");
+
+            addProductBtn.addEventListener("click", function() {
+                var productName = document.getElementById("product-name").value;
+                var quantity = document.getElementById("quantity").value;
+
+                if (productName.trim() === "" || quantity.trim() === "") {
+                    alert("Por favor, ingresa el nombre del producto y la cantidad.");
+                    return;
+                }
+
+                // Crear nuevo elemento de lista y agregarlo al DOM
+                var listItem = document.createElement("li");
+                listItem.textContent = productName + " - Cantidad: " + quantity;
+                productList.appendChild(listItem);
+
+                // Limpiar los campos de entrada
+                document.getElementById("product-name").value = "";
+                document.getElementById("quantity").value = "";
+            });
+        });
+    </script>
+</body>
+</html>
