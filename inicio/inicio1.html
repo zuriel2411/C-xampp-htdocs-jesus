@@ -4,70 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Almacén de Abarrotes</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .form {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        input, button {
-            padding: 8px;
-            margin-bottom: 10px;
-        }
-
-        button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #0056b3;
-        }
-
-        .products {
-            border-top: 1px solid #ccc;
-            padding-top: 20px;
-        }
-
-        h2 {
-            margin-top: 0;
-        }
-    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <h1>Almacén de Abarrotes</h1>
-        <div class="form">
-            <h2>Agregar Producto</h2>
-            <label for="product-name">Nombre del Producto:</label>
-            <input type="text" id="product-name">
-            <label for="quantity">Cantidad:</label>
-            <input type="number" id="quantity" min="1">
-            <button id="add-product-btn">Agregar Producto</button>
+    <div class="container py-5">
+        <h1 class="text-center mb-4">Almacén de Abarrotes</h1>
+        <div class="row">
+            <div class="col-md-6 mx-auto">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h2 class="card-title">Agregar Producto</h2>
+                        <form>
+                            <div class="mb-3">
+                                <label for="product-name" class="form-label">Nombre del Producto:</label>
+                                <input type="text" class="form-control" id="product-name">
+                            </div>
+                            <div class="mb-3">
+                                <label for="quantity" class="form-label">Cantidad:</label>
+                                <input type="number" class="form-control" id="quantity" min="1">
+                            </div>
+                            <button type="button" class="btn btn-primary" id="add-product-btn">Agregar Producto</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="products">
-            <h2>Productos en Existencia</h2>
-            <ul id="product-list">
-                <!-- Aquí se mostrarán los productos -->
-            </ul>
+        <div class="row">
+            <div class="col-md-6 mx-auto">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title">Productos en Existencia</h2>
+                        <ul class="list-group" id="product-list">
+                            <!-- Aquí se mostrarán los productos -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <script>
@@ -86,6 +58,7 @@
 
                 // Crear nuevo elemento de lista y agregarlo al DOM
                 var listItem = document.createElement("li");
+                listItem.className = "list-group-item";
                 listItem.textContent = productName + " - Cantidad: " + quantity;
                 productList.appendChild(listItem);
 
@@ -95,5 +68,6 @@
             });
         });
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
