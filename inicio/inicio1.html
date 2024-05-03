@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -87,6 +87,11 @@
                     <!-- Aquí se cargarán los productos -->
                 </ul>
             </div>
+            <div class="card-footer text-end">
+                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#sellProductModal">
+                    Vender Producto
+                </button>
+            </div>
         </div>
     </div>
 
@@ -100,6 +105,37 @@
                 </div>
                 <div class="modal-body" id="productDetailsModalBody">
                     <!-- Contenido del modal -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para vender producto -->
+    <div class="modal fade" id="sellProductModal" tabindex="-1" aria-labelledby="sellProductModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="sellProductModalLabel">Vender Producto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="sellProductForm">
+                        <div class="mb-3">
+                            <label for="selectProduct" class="form-label">Seleccionar Producto</label>
+                            <select class="form-select" id="selectProduct" required>
+                                <option value="" selected disabled>Seleccionar producto...</option>
+                                <!-- Opciones de productos se cargarán aquí dinámicamente -->
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="quantityToSell" class="form-label">Cantidad a Vender</label>
+                            <input type="number" class="form-control" id="quantityToSell" required min="1">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Vender</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <strong>Total:</strong> <span id="sellTotal"></span>
                 </div>
             </div>
         </div>
@@ -167,6 +203,60 @@
             modal.show();
         }
 
+        // Función para cargar los productos en el select del formulario de venta
+        function loadProductsForSale() {
+            const selectProduct = document.getElementById('selectProduct');
+            selectProduct.innerHTML = '<option value="" selected disabled>Seleccionar producto...</option>';
+            products.forEach(product => {
+                const option = document.createElement('option');
+                option.value = product.id;
+                option.textContent = product.name;
+                selectProduct.appendChild(option);
+            });
+        }
+
+        // Función para calcular el total de la venta
+        function calculateTotal(quantity, price) {
+            return quantity * price;
+        }
+
+        // Actualizar el total cuando se cambie la cantidad a vender
+        document.getElementById('quantityToSell').addEventListener('input', function() {
+            const productId = document.getElementById('selectProduct').value;
+            const product = products.find(p => p.id === parseInt(productId));
+            const quantityToSell = parseInt(this.value);
+            const sellTotal = document.getElementById('sellTotal');
+            if (product && !isNaN(quantityToSell)) {
+                const total = calculateTotal(quantityToSell, product.price);
+                sellTotal.textContent = '$' + total.toFixed(2);
+            } else {
+                sellTotal.textContent = '';
+            }
+        });
+
+        // Función para manejar la venta de producto
+        document.getElementById('sellProductForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const productId = document.getElementById('selectProduct').value;
+            const product = products.find(p => p.id === parseInt(productId));
+            const quantityToSell = parseInt(document.getElementById('quantityToSell').value);
+
+            if (product && !isNaN(quantityToSell) && quantityToSell > 0 && quantityToSell <= product.quantity) {
+                const total = calculateTotal(quantityToSell, product.price);
+                alert(`Venta exitosa!\n\nProducto: ${product.name}\nCantidad: ${quantityToSell}\nTotal: $${total.toFixed(2)}`);
+                // Restar la cantidad vendida del stock
+                product.quantity -= quantityToSell;
+                loadProducts();
+                // Limpiar el formulario y cerrar el modal
+                document.getElementById('sellProductForm').reset();
+                document.getElementById('sellTotal').textContent = '';
+                const sellModal = new bootstrap.Modal(document.getElementById('sellProductModal'));
+                sellModal.hide();
+            } else {
+                alert('Por favor, seleccione un producto y una cantidad válida.');
+            }
+        });
+
         // Función para agregar un nuevo producto
         document.querySelector('#addProductForm').addEventListener('submit', function(event) {
             event.preventDefault();
@@ -209,6 +299,7 @@
         
         // Cargar productos al cargar la página
         loadProducts();
+        loadProductsForSale();
     </script>
 </body>
 </html>
