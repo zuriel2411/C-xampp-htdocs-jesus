@@ -1,4 +1,4 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -11,9 +11,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         body {
-            background-color: #f0f6fc;
+            background-color: #272822;
             padding-top: 20px;
             font-family: Arial, sans-serif;
+            color: #fff;
         }
 
         .container {
@@ -23,19 +24,98 @@
 
         .card {
             margin-bottom: 20px;
+            background-color: #272822;
+            color: #fff;
+            border-color: #363636;
+        }
+
+        .card-header {
+            background-color: #363636;
+            border-color: #363636;
+            color: #fff;
+        }
+
+        .btn-primary {
+            background-color: #5cb85c;
+            border-color: #4cae4c;
+        }
+
+        .btn-primary:hover {
+            background-color: #4cae4c;
+            border-color: #398439;
+        }
+
+        .btn-danger {
+            background-color: #d9534f;
+            border-color: #d43f3a;
+        }
+
+        .btn-danger:hover {
+            background-color: #c9302c;
+            border-color: #ac2925;
+        }
+
+        .form-control {
+            background-color: #363636;
+            color: #fff;
+            border-color: #363636;
+        }
+
+        .form-control:focus {
+            background-color: #363636;
+            color: #fff;
+            border-color: #363636;
+            box-shadow: none;
+        }
+
+        .list-group-item {
+            background-color: #363636;
+            color: #fff;
+            border-color: #363636;
+        }
+
+        .list-group-item:hover {
+            background-color: #454545;
+            color: #fff;
+            border-color: #363636;
+        }
+
+        .modal-content {
+            background-color: #363636;
+            color: #fff;
+        }
+
+        .modal-header {
+            border-bottom-color: #363636;
+            background-color: #363636;
+            color: #fff;
+        }
+
+        .modal-footer {
+            border-top-color: #363636;
+            background-color: #363636;
+            color: #fff;
+        }
+
+        .modal-footer button {
+            color: #fff;
+        }
+
+        .modal-footer button:hover {
+            color: #ccc;
         }
 
         /* Estilo para el recuadro de imagen */
         #imagePreview {
             max-width: 100%;
             height: auto;
-            max-height: 200px; /* Altura máxima para la previsualización de la imagen */
+            max-height: 150px; /* Altura máxima para la previsualización de la imagen */
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1 class="mb-4">Punto de Venta</h1>
+        <h1 class="mb-4 text-center">Punto de Venta</h1>
         
         <!-- Agregar Producto -->
         <div class="card">
@@ -281,6 +361,7 @@
                 };
                 products.push(newProduct);
                 loadProducts();
+                loadProductsForSale(); // Agregado para actualizar la lista de productos en el formulario de venta
                 // Limpiar el formulario después de agregar el producto
                 document.getElementById('productName').value = '';
                 document.getElementById('productDescription').value = '';
